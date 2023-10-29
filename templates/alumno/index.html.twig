@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RegistroAlumno{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('css/registro.css') }}" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+{% endblock %}
+
+{% block body %}
+
+<body>
+    
+    <div class="container">
+        <div class="forms">
+            <div class="form signup">
+                <span class="title">Regístrate</span>
+                {{ form_start(form) }}
+                <div class="input-field">
+                    {{ form_widget(form.nombre, {'attr': {'placeholder': 'Ingrese su nombre'}}) }}
+                    <i class="uil uil-user icon"></i>
+                </div>
+                <div class="input-field">
+                    {{ form_widget(form.apellidoPaterno, {'attr': {'placeholder': 'Ingrese su apellido paterno'}}) }}
+                    <i class="uil uil-user icon"></i>
+                </div>
+                <div class="input-field">
+                    {{ form_widget(form.apellidoMaterno, {'attr': {'placeholder': 'Ingrese su apellido materno'}}) }}
+                    <i class="uil uil-user icon"></i>
+                </div>
+                <div class="input-field">
+                    {{ form_widget(form.dni, {'attr': {'placeholder': 'Ingrese su DNI'}}) }}
+                    <i class="uil uil-envelope icon"></i>
+                </div>
+                <div class="input-field">
+                    {{ form_widget(form.password, {'attr': {'placeholder': 'Ingrese su contraseña', 'class': 'password'}}) }}
+                    <i class="uil uil-lock icon"></i>
+                    <i class="uil uil-eye-slash showHidePw icon"></i>
+                </div>
+                <div class="input-field button">
+                     {{ form_widget(form.registrar, {'attr': {'class': 'button', 'value': 'Registrarse'}}) }}
+                </div>
+                {{ form_end(form) }}
+                <div class="login-signup">
+                    <span class="text">¿Ya tienes una cuenta?
+                        <a href="{{ path('app_login') }}" class="text login-link">Iniciar Sesión</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        pwShowHide = document.querySelectorAll(".showHidePw"),
+        pwFields = document.querySelectorAll(".password");
+
+        //   js code to show/hide password and change icon
+        pwShowHide.forEach(eyeIcon =>{
+            eyeIcon.addEventListener("click", ()=>{
+                pwFields.forEach(pwField =>{
+                    if(pwField.type ==="password"){
+                        pwField.type = "text";
+
+                        pwShowHide.forEach(icon =>{
+                            icon.classList.replace("uil-eye-slash", "uil-eye");
+                        })
+                    }else{
+                        pwField.type = "password";
+
+                        pwShowHide.forEach(icon =>{
+                            icon.classList.replace("uil-eye", "uil-eye-slash");
+                        })
+                    }
+                }) 
+            })
+        })
+    </script> 
+</body>
+
+{% endblock %}

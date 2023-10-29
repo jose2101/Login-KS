@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="{{ asset('css/login.css') }}" />
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+{% endblock %}
+
+{% block body %}
+<body>
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Login</span>
+                <form method="post">
+
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+
+                    {% if app.user %}
+                        <div class="mb-3">
+                            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                        </div>
+                    {% endif %}
+
+                    <div class="input-field">
+                        <input type="text" value="{{ last_username }}" name="dni" id="inputDni" class="form-control" autocomplete="username" placeholder="Ingresa tu DNI" required autofocus>
+                        <i class="uil uil-envelope icon"></i>
+                    </div>
+                    <div class="input-field">
+                        <input type="password" class="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" placeholder="Ingresa tu contraseña" required>
+                        <i class="uil uil-lock icon"></i>
+                        <i class="uil uil-eye-slash showHidePw"></i>
+                        <input type="hidden" name="_csrf_token"
+                            value="{{ csrf_token('authenticate') }}"
+                        >
+                    </div>
+                    <div class="input-field button">
+                        <input type="submit" value="Iniciar Sesion">
+                    </div>
+                </form>
+                <div class="login-signup">
+                    <span class="text">¿No tienes una cuenta?
+                        <a href="{{ path('app_alumno') }}" class="text signup-link">Registrate</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        pwShowHide = document.querySelectorAll(".showHidePw"),
+        pwFields = document.querySelectorAll(".password");
+        
+        pwShowHide.forEach(eyeIcon =>{
+            eyeIcon.addEventListener("click", ()=>{
+                pwFields.forEach(pwField =>{
+                    if(pwField.type ==="password"){
+                        pwField.type = "text";
+                        pwShowHide.forEach(icon =>{
+                            icon.classList.replace("uil-eye-slash", "uil-eye");
+                        })
+                    }else{
+                        pwField.type = "password";
+                        pwShowHide.forEach(icon =>{
+                            icon.classList.replace("uil-eye", "uil-eye-slash");
+                        })
+                    }
+                }) 
+            })
+        })
+    </script> 
+</body>
+{% endblock %}
